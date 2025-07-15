@@ -311,9 +311,6 @@ class Toast(QDialog):
             self.__elapsed_time = 0
             self.__fading_out = False
 
-            # Emit signal
-            self.closed.emit()
-
             # Update every other currently shown notification
             for toast in Toast.__currently_shown:
                 toast.__update_position_y()
@@ -323,6 +320,9 @@ class Toast(QDialog):
             timer.setSingleShot(True)
             timer.timeout.connect(Toast.__show_next_in_queue)
             timer.start(self.__fade_in_duration)
+
+        # Emit signal
+        self.closed.emit()
 
     def __update_duration_bar(self):
         """Update the duration bar chunk with the elapsed time"""
