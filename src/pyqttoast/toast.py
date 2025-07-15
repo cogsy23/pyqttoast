@@ -283,6 +283,8 @@ class Toast(QDialog):
     def hide(self):
         """Start hiding process of the toast notification"""
 
+        self.__used = True
+
         if not self.__fading_out:
             self.__fading_out = True
             if self.__duration != 0:
