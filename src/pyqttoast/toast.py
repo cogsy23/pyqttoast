@@ -338,6 +338,15 @@ class Toast(QDialog):
                                      * self.__duration_bar_container.width())
         self.__duration_bar_chunk.setFixedWidth(new_chunk_width)
 
+    def __set_duration_bar(self, fraction):
+        """Set the width of the duration bar chunk with the specified fraction"""
+
+        if self.__duration_bar_timer.isActive():
+            self.__duration_bar_timer.stop()
+
+        new_chunk_width = math.floor(fraction * self.__duration_bar_container.width())
+        self.__duration_bar_chunk.setFixedWidth(new_chunk_width)
+
     def __update_position_xy(self, animate: bool = True):
         """Update the x and y position of the toast with an optional animation
 
@@ -1419,6 +1428,13 @@ class Toast(QDialog):
         if self.__used:
             return
         self.__duration_bar_color = color
+
+    def setDurationBarValue(self, fraction: float):
+        """Set the width of the duration bar with the specified fraction
+
+        :param fraction: The fraction of the total width from 0.0 to 1.0
+        """
+        self.__set_duration_bar(fraction)
 
     def getTitleFont(self) -> QFont:
         """Get the font of the title
